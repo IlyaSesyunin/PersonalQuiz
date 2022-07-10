@@ -30,7 +30,7 @@ class QuestionsViewController: UIViewController {
     }
     
     private let questions = Question.getQuestions()
-    private var answersChosen: [Answer] = []
+    var answersChoosen: [Answer] = []
     private var questionIndex = 0
     private var currentAnswers: [Answer] {
         questions[questionIndex].answers
@@ -44,14 +44,14 @@ class QuestionsViewController: UIViewController {
     @IBAction func singleButtonAnswerPressed(_ sender: UIButton) {
         guard let buttonIndex = singleButtons.firstIndex(of: sender) else { return }
         let answer = currentAnswers[buttonIndex]
-        answersChosen.append(answer)
+        answersChoosen.append(answer)
         nextQuestion()
     }
     
     @IBAction func multipleButtonAnswerPressed() {
         for (multipleSwitch, answer) in zip(multipleSwitches, currentAnswers) {
             if multipleSwitch.isOn {
-                answersChosen.append(answer)
+                answersChoosen.append(answer)
             }
         }
         nextQuestion()
@@ -59,7 +59,7 @@ class QuestionsViewController: UIViewController {
     
     @IBAction func rangedAnswerButtonPressed() {
         let index = lrintf(rangedSlider.value)
-        answersChosen.append(currentAnswers[index])
+        answersChoosen.append(currentAnswers[index])
         nextQuestion()
     }
 }
@@ -122,7 +122,12 @@ extension QuestionsViewController {
             updateUI()
             return
         }
-        
         performSegue(withIdentifier: "showResult", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "ResultsSegue" else { return }
+        let resultVC = segue.destination as! ResultViewController
+        resultVC.answers = answersChoosen
     }
 }

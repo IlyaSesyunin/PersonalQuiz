@@ -142,6 +142,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
 				LastUpgradeCheck = 1340;
+				ORGANIZATIONNAME = "Ilya Sesyunin";
 				TargetAttributes = {
 					A8AB271728735EFC000D9FE7 = {
 						CreatedOnToolsVersion = 13.4.1;
